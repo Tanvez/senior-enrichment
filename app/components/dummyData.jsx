@@ -4,7 +4,7 @@ import React, { Component } from 'react';
    This code is just a nice BIG example of how you can make a component.
    Also it is HILARIOUS :D Have fun!
  */
- 
+
 export default class WinterJokes extends Component {
   constructor() {
     super()
@@ -24,13 +24,13 @@ export default class WinterJokes extends Component {
   }
 
   answer() {
-    this.setState({answered: true})
+    this.setState({ answered: true })
   }
 
   render() {
     if (!this.state) { return null }
 
-    const {joke, answered} = this.state    
+    const { joke, answered } = this.state
     return (
       <div>
         <h1 onClick={answered ? this.nextJoke : this.answer}>{joke.q}</h1>
@@ -115,6 +115,6 @@ A: They're both below C level!`
   .split('\n')
   .reduce((all, row, i) =>
     i % 2 === 0
-    ? [...all, {q: row}]
-    : [...all.slice(0, all.length - 1), Object.assign({a: row}, all[all.length - 1])],
-    [])
+      ? [...all, { q: row }]
+      : [...all.slice(0, all.length - 1), Object.assign({ a: row }, all[all.length - 1])],
+  [])

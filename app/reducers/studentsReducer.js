@@ -20,7 +20,7 @@ export function fetchStudents() {
 function studentReducer(state =[], action) {
     switch (action.type) {
         case GET_STUDENTS:
-            return action.students;
+            return action.students; // just returns all students
         default: return state;
     }
 

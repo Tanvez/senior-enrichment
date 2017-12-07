@@ -23,5 +23,20 @@ module.exports = db.define('students', {
         validate: {
             isEmail: true
         }
+    },
+    gpa:{
+        type: Sequelize.FLOAT,
+        allowNull: false,
+        validate:{
+                max:4.0
+                }
+        },
+    fullName:{
+        type:Sequelize.VIRTUAL,
+        get:function(){
+            return (this.getDataValue('firstName') + ' ' + this.getDataValue('lastName'))
+        }
     }
-});
+    }
+);
+

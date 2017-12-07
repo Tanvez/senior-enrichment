@@ -17,11 +17,11 @@ export function fetchStudents() {
     }
 }
 
-function studentReducer(state = [], action) {
+function studentReducer(state =[], action) {
     switch (action.type) {
         case GET_STUDENTS:
-            return [...state, action.students]
-        default: return state
+            return action.students;
+        default: return state;
     }
 
 }

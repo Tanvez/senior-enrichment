@@ -1,22 +1,39 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 import {
-    TableBody,
+    Table, TableHeader, TableHeaderColumn,
     TableRow,
     TableRowColumn,
+    TableBody
 } from 'material-ui/Table';
 
-export default function StudentList() {
+function StudentList(props) {
 
+    console.log( 'ahh', props.students);
     return (
-
-        <TableRow>
-            <TableRowColumn>1</TableRowColumn>
-            <TableRowColumn>Testing Student</TableRowColumn>
-            <TableRowColumn>Current Stu</TableRowColumn>
-        </TableRow>
-
+        <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Status</TableHeaderColumn>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+        {props.students.map(student=>{
+            console.log(student)
+                    return (
+                        <TableRow key={student.id}>
+                            <TableRowColumn>{student.id}</TableRowColumn>
+                            <TableRowColumn>{student.fullName}</TableRowColumn>
+                            <TableRowColumn>Current Stu</TableRowColumn>
+                        </TableRow>
+                        )
+                })}
+        </TableBody>
+</Table>
     )
 }
 
@@ -34,8 +51,8 @@ export default function StudentList() {
 //     }
 // }
 
-// const mapStateToProps = function (state) {
-//     return {state};
-// }
+const mapStateToProps = function (state) {
+    return {students:state.students}
+};
 
-// export default connect(mapStateToProps)(StudentListLoader);
+export default withRouter (connect(mapStateToProps)(StudentList));

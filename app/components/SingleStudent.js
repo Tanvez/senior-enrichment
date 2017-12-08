@@ -1,4 +1,4 @@
-import React, { Link } from 'react';
+import React, { Link , Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -7,42 +7,50 @@ import {
     TableRowColumn,
     TableBody
 } from 'material-ui/Table';
+import {fetchStudent} from '../reducers/oneStudent';
+import store from '../store';
+     class SingleStudent extends Component {
+    // const id = props.id; // why is this a string? cuz of html?
+    // const singleStu = props.students.find(stu=>{
+    //     return stu.id===Number(id)
+    // })
+    // console.log('single stu', singleStu)
+    componentDidMount(){
+        const oneStudent = fetchStudent(this.props.id);
+        store.dispatch(oneStudent);
+    }
+    render ()
+    {
 
-function SingleStudent(props) {
+        return (
+            <Table>
+            <TableHeader displaySelectAll={false} adjustForCheckbox ={false}>
+                    <TableRow>
+                        <TableHeaderColumn>ID</TableHeaderColumn>
+                        <TableHeaderColumn>Name</TableHeaderColumn>
+                        <TableHeaderColumn>GPA</TableHeaderColumn>
+                        <TableHeaderColumn>Status</TableHeaderColumn>
+                    </TableRow>
+                </TableHeader>
+                <TableBody  displayRowCheckbox={false}>
 
-    const id = props.match.params.id;
-    const singleStu = props.students.filter(elem => {
-        console.log('elem id'.elem.id)
-        return elem.id === id;
-    })
-    console.log('single student', singleStu)
-    return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHeaderColumn>ID</TableHeaderColumn>
-                    <TableHeaderColumn>Name</TableHeaderColumn>
-                    <TableHeaderColumn>GPA</TableHeaderColumn>
-                    <TableHeaderColumn>Status</TableHeaderColumn>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
+                    <TableRow key='PlaceHolder'>
+                        <TableRowColumn>PlaceHolder</TableRowColumn>
+                        <TableRowColumn>
+                        PlaceHolder
+                        </TableRowColumn>
+                        <TableRowColumn>PlaceHolder</TableRowColumn>
+                        <TableRowColumn>Current Stu</TableRowColumn>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        )
+}}
 
-                <TableRow key={singleStu.id}>
-                    <TableRowColumn>{singleStu.id}</TableRowColumn>
-                    <TableRowColumn>
-                        {singleStu.fullName}
-                    </TableRowColumn>
-                    <TableRowColumn>{singleStu.gpa}</TableRowColumn>
-                    <TableRowColumn>Current Stu</TableRowColumn>
-                </TableRow>
-            </TableBody>
-        </Table>
-    )
-}
 // export default SingleStudent;
-const mapToState = function (state) {
-    return { students: state.students }
+const mapToState = function (state, ownProps) {
+    return { students: state.students,
+                id:ownProps.match.params.id }
 }
 
 export default withRouter(connect(mapToState)(SingleStudent));

@@ -15,8 +15,8 @@ const styles = {
         justifyContent: 'space-around',
     },
     gridList: {
-        width: 700,
-        height: 700,
+        width: '100%',
+        height:'100%',
         overflowY: 'auto',
     },
 };
@@ -30,16 +30,14 @@ function CampusList(props) {
         <div style={styles.root}>
             <GridList
                 cellHeight={180}
-                style={styles.gridList}
-            >
+                style={styles.gridList}>
                 <Subheader>Campuses</Subheader>
                 {campus.map((cam) => (
                     <GridTile
                         key={cam.id}
                         title={cam.name}
-                        actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-                    >
-                        <img src={cam.imageUrl} />
+                        actionIcon={<IconButton><StarBorder color="white" /></IconButton>}>
+                        <img src={cam.imageUrl}/>
                     </GridTile>
                 ))}
             </GridList>

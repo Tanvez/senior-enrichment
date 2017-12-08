@@ -11,25 +11,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
-export default class ToolbarExamplesSimple extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: 1,
-
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
-    handleChange(event, index, value) {
-        this.setState({ value: value });
-    }
-
-    render() {
+const NavBar = (props)=> {
         return (
             <Toolbar>
+                 <ToolbarGroup firstChild={true}>
+                 <RaisedButton label="Home" primary={true} />
+                </ToolbarGroup>
                 <ToolbarGroup>
                     <FontIcon className="muidocs-icon-custom-sort" />
+                    <ToolbarSeparator />
                     <Link className="campus" to="/campus">
                         <RaisedButton label="Campus" primary={true} />
                     </Link>
@@ -46,8 +36,8 @@ export default class ToolbarExamplesSimple extends React.Component {
                 </ToolbarGroup>
             </Toolbar>
         );
-    }
 }
+export default NavBar;
 // <ToolbarGroup firstChild={true}>
 //<ToolbarSeparator />
 // <DropDownMenu value={this.state.value} onChange={this.handleChange}>

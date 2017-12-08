@@ -12,7 +12,7 @@ import {
 function StudentList(props) {
     return (
         <Table>
-            <TableHeader>
+            <TableHeader displaySelectAll={false} adjustForCheckbox = {false}>
                 <TableRow>
                     <TableHeaderColumn>ID</TableHeaderColumn>
                     <TableHeaderColumn>Name</TableHeaderColumn>
@@ -20,7 +20,7 @@ function StudentList(props) {
                     <TableHeaderColumn>Status</TableHeaderColumn>
                 </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody  displayRowCheckbox={false}>
                 {props.students.map(student => {
                     console.log(student)
                     return (

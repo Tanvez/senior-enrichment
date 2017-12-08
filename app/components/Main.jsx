@@ -7,6 +7,7 @@ import Home from './Home';
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
 import { fetchCampuses } from '../reducers/campus';
+import {fetchStudent} from '../reducers/oneStudent';
 
 //Styling
 import NavBar from './NavBar';

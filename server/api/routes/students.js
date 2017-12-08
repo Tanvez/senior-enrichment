@@ -13,3 +13,29 @@ router.get('/', (req, res, next) => {
         .then(data => res.json(data))
         .catch(next);
 });
+
+router.get('/:id', (req,res,next)=>{
+    const id = req.params.id;
+    Students.findById(id)
+        .then(data =>res.json(data))
+        .catch(next);
+});
+// router.param('id', function(req,res,next,id){
+//     console.log('working?')
+//   Students.findById(id)
+//   .then(student=> {
+//       if(!student){
+//       const err = Error('Student not found');
+//       err.status = 404;
+//       throw err;
+//     }
+//     req.student = student;
+//     next();
+//   })
+//   .catch(next);
+// })
+
+// router.get('/:id', function (req, res){
+//     res.json(req.student)
+// })
+

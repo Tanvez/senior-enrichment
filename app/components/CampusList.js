@@ -16,7 +16,7 @@ const styles = {
     },
     gridList: {
         width: '100%',
-        height:'100%',
+        height: '100%',
         overflowY: 'auto',
     },
 };
@@ -24,7 +24,7 @@ const styles = {
 
 function CampusList(props) {
     const campus = props.campus; // array of campuses
-    console.log('props??', campus);
+    console.log('Campus running', campus);
     return (
 
         <div style={styles.root}>
@@ -33,12 +33,11 @@ function CampusList(props) {
                 style={styles.gridList}>
                 <Subheader>Campuses</Subheader>
                 {campus.map((cam) => (
-                    <Link className="campusTiles" to={`/campus/${cam.id}`}>
+                    <Link key={cam.id} className="campusTiles" to={`/campus/${cam.id}`}>
                         <GridTile
-                            key={cam.id}
                             title={cam.name}
                             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}>
-                            <img src={cam.imageUrl}/>
+                            <img src={cam.imageUrl} />
                         </GridTile>
                     </Link>
                 ))}

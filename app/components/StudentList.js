@@ -10,32 +10,33 @@ import {
 } from 'material-ui/Table';
 
 function StudentList(props) {
+    console.log('all students running ')
     return (
         <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox = {false}>
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
                     <TableHeaderColumn>ID</TableHeaderColumn>
                     <TableHeaderColumn>Name</TableHeaderColumn>
                     <TableHeaderColumn>GPA</TableHeaderColumn>
-                    <TableHeaderColumn>Status</TableHeaderColumn>
+                    <TableHeaderColumn>Attending</TableHeaderColumn>
                 </TableRow>
             </TableHeader>
-            <TableBody  displayRowCheckbox={false}>
+            <TableBody displayRowCheckbox={false}>
                 {props.students.map(student => {
-                    console.log(student)
+
                     return (
                         <TableRow key={student.id}>
 
                             <TableRowColumn>{student.id}</TableRowColumn>
 
                             <TableRowColumn>
-                                <Link className="studentRow" to={`/campus/students/${student.id}`}>
+                                <Link className="studentRow" to={`/campus/allstudents/${student.id}`}>
                                     {student.fullName}
                                 </Link>
                             </TableRowColumn>
 
                             <TableRowColumn>{student.gpa}</TableRowColumn>
-                            <TableRowColumn>Current Stu</TableRowColumn>
+                            <TableRowColumn>{student.campus.name}</TableRowColumn>
 
                         </TableRow>
                     )

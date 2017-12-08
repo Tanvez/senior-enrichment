@@ -7,7 +7,6 @@ import Home from './Home';
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
 import { fetchCampuses } from '../reducers/campus';
-import {fetchStudent} from '../reducers/oneStudent';
 
 //Styling
 import NavBar from './NavBar';
@@ -38,7 +37,7 @@ export default class Main extends Component {
                     <div className="col-xs-10">
                         <Switch>
                             <Route exact path='/campus/allstudents' component={StudentList} />
-                            <Route path='/campus/students/:id' component={SingleStudent} />
+                            <Route path='/campus/allstudents/:id' component={SingleStudent} />
                             <Route path='/campus' component={CampusList} />
                             <Route path='/' component={Home} />
                         </Switch>

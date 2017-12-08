@@ -1,56 +1,60 @@
-import React, { Link , Component} from 'react';
+import React, { Link, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { fetchStudent } from '../reducers/oneStudent';
+import store from '../store';
+
 import {
     Table, TableHeader, TableHeaderColumn,
     TableRow,
     TableRowColumn,
     TableBody
 } from 'material-ui/Table';
-import {fetchStudent} from '../reducers/oneStudent';
-import store from '../store';
-     class SingleStudent extends Component {
-    // const id = props.id; // why is this a string? cuz of html?
-    // const singleStu = props.students.find(stu=>{
-    //     return stu.id===Number(id)
-    // })
-    // console.log('single stu', singleStu)
-    componentDidMount(){
-        const oneStudent = fetchStudent(Number(this.props.id));
-        store.dispatch(oneStudent);
-    }
-    render ()
-    {
 
+class SingleStudent extends Component {
+
+    componentDidMount() {
+        const single = fetchStudent((this.props.match.params.id));
+        store.dispatch(single);
+    }
+
+    render() {
+        console.log('single student is running', this.props.campus && this.props.campus.name)
         return (
             <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox ={false}>
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
                         <TableHeaderColumn>ID</TableHeaderColumn>
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         <TableHeaderColumn>GPA</TableHeaderColumn>
-                        <TableHeaderColumn>Status</TableHeaderColumn>
+                        <TableHeaderColumn>Attending</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody  displayRowCheckbox={false}>
+                <TableBody displayRowCheckbox={false}>
 
                     <TableRow key='PlaceHolder'>
-                        <TableRowColumn>PlaceHolder</TableRowColumn>
+                        <TableRowColumn>{this.props.student.id}</TableRowColumn>
                         <TableRowColumn>
-                        PlaceHolder
+                            {this.props.student.fullName}
                         </TableRowColumn>
-                        <TableRowColumn>PlaceHolder</TableRowColumn>
-                        <TableRowColumn>Current Stu</TableRowColumn>
+                        <TableRowColumn>{this.props.student.gpa}</TableRowColumn>
+                        <TableRowColumn>{this.props.campus && this.props.campus.name //have to short circuit because this.props.campus.name will throw an error instead of undefined
+                            // this.props will produce undefined
+                        }</TableRowColumn>
                     </TableRow>
                 </TableBody>
             </Table>
         )
-}}
+    }
+}
+
 
 // export default SingleStudent;
-const mapToState = function (state, ownProps) {
-    return { students: state.students,
-                id:ownProps.match.params.id }
+const mapToState = function (state) {
+    return {
+        student: state.student,
+        campus: state.student.campus
+    }
 }
 
 export default withRouter(connect(mapToState)(SingleStudent));
@@ -59,5 +63,38 @@ export default withRouter(connect(mapToState)(SingleStudent));
 
 
 
+
+
+// NO SINGLE STUDENT ROUTE - FETCHES DATA FROM ALLSTUDENTS
+// function SingleStudent(props) {
+//     const id = props.id; // why is this a string? cuz of html?
+//     const singleStu = props.students.find(stu => {
+//         return stu.id === Number(id)
+//     })
+//     console.log('single', singleStu);
+//     return (
+//         <Table>
+//             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+//                 <TableRow>
+//                     <TableHeaderColumn>ID</TableHeaderColumn>
+//                     <TableHeaderColumn>Name</TableHeaderColumn>
+//                     <TableHeaderColumn>GPA</TableHeaderColumn>
+//                     <TableHeaderColumn>Status</TableHeaderColumn>
+//                 </TableRow>
+//             </TableHeader>
+//             <TableBody displayRowCheckbox={false}>
+
+//                 <TableRow key='PlaceHolder'>
+//                     <TableRowColumn>{singleStu.id}</TableRowColumn>
+//                     <TableRowColumn>
+//                         {singleStu.fullName}
+//                     </TableRowColumn>
+//                     <TableRowColumn>{singleStu.gpa}</TableRowColumn>
+//                     <TableRowColumn>{singleStu.campus.name}</TableRowColumn>
+//                 </TableRow>
+//             </TableBody>
+//         </Table>
+//     )
+// }
 
 

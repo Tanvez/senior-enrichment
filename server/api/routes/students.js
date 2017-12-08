@@ -14,12 +14,19 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/:id', (req,res,next)=>{
+router.get('/:id', (req, res, next) => {
     const id = req.params.id;
-    Students.findById(id)
-        .then(data =>res.json(data))
+    Students.findById(id, {
+        include: [{
+            all: true
+        }]
+    })
+        .then(data => res.json(data))
         .catch(next);
 });
+
+
+//CAN ALSO BE USED TO GET SINGLE STUDENT
 // router.param('id', function(req,res,next,id){
 //     console.log('working?')
 //   Students.findById(id)

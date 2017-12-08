@@ -11,32 +11,32 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
-const NavBar = (props)=> {
-        return (
-            <Toolbar>
-                 <ToolbarGroup firstChild={true}>
-                 <Link className = 'home' to="/">
-                 <RaisedButton label="Home" primary={true} />
-                 </Link>
-                </ToolbarGroup>
-                <ToolbarGroup>
-                    <FontIcon className="muidocs-icon-custom-sort" />
-                    <ToolbarSeparator />
-                    <Link className="campus" to="/campus">
-                        <RaisedButton label="Campus" primary={true} />
-                    </Link>
-                    <Link className="campusHome" to="/campus/allstudents">
-                        <RaisedButton label="Student" secondary={true} />
-                    </Link>
-                    <IconMenu
-                        iconButtonElement={
-                            <IconButton touch={true}>
-                            </IconButton>
-                        }
-                    >
-                    </IconMenu>
-                </ToolbarGroup>
-            </Toolbar>
-        );
+const NavBar = (props) => {
+    return (
+        <Toolbar>
+            <ToolbarGroup firstChild={true}>
+                <Link className='home' to="/">
+                    <RaisedButton label="Home" primary={true} />
+                </Link>
+            </ToolbarGroup>
+            <ToolbarGroup>
+                <FontIcon className="muidocs-icon-custom-sort" />
+                <ToolbarSeparator />
+                <Link className="campus" to="/campus">
+                    <RaisedButton label="Campus" primary={true} />
+                </Link>
+                <Link className="campusHome" to="/campus/allstudents">
+                    <RaisedButton label="Student" primary={true} />
+                </Link>
+                <IconMenu
+                    iconButtonElement={
+                        <IconButton touch={true}>
+                        </IconButton>
+                    }
+                >
+                </IconMenu>
+            </ToolbarGroup>
+        </Toolbar>
+    );
 }
 export default NavBar;

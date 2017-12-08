@@ -11,7 +11,7 @@ export function getStudent(student) {
 //thunk creators
 export function fetchStudent(id) {
     return function (dispatch) {
-        axios.get('/api/student/',id)
+        axios.get(`/api/student/${id}`)
             .then(res => res.data)
             .then(student => dispatch(getStudent(student)))
     }

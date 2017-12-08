@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -33,12 +33,14 @@ function CampusList(props) {
                 style={styles.gridList}>
                 <Subheader>Campuses</Subheader>
                 {campus.map((cam) => (
-                    <GridTile
-                        key={cam.id}
-                        title={cam.name}
-                        actionIcon={<IconButton><StarBorder color="white" /></IconButton>}>
-                        <img src={cam.imageUrl}/>
-                    </GridTile>
+                    <Link className="campusTiles" to={`/campus/${cam.id}`}>
+                        <GridTile
+                            key={cam.id}
+                            title={cam.name}
+                            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}>
+                            <img src={cam.imageUrl}/>
+                        </GridTile>
+                    </Link>
                 ))}
             </GridList>
         </div>

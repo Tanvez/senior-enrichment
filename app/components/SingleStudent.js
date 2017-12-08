@@ -16,7 +16,7 @@ import store from '../store';
     // })
     // console.log('single stu', singleStu)
     componentDidMount(){
-        const oneStudent = fetchStudent(this.props.id);
+        const oneStudent = fetchStudent(Number(this.props.id));
         store.dispatch(oneStudent);
     }
     render ()

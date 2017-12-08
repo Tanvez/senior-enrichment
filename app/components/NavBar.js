@@ -15,7 +15,9 @@ const NavBar = (props)=> {
         return (
             <Toolbar>
                  <ToolbarGroup firstChild={true}>
+                 <Link className = 'home' to="/">
                  <RaisedButton label="Home" primary={true} />
+                 </Link>
                 </ToolbarGroup>
                 <ToolbarGroup>
                     <FontIcon className="muidocs-icon-custom-sort" />
@@ -38,10 +40,3 @@ const NavBar = (props)=> {
         );
 }
 export default NavBar;
-// <ToolbarGroup firstChild={true}>
-//<ToolbarSeparator />
-// <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-// <MenuItem value={1} primaryText="All Campuses" />
-// <MenuItem value={2} primaryText="All Students" />
-// </DropDownMenu>
-// </ToolbarGroup>

@@ -10,7 +10,7 @@ export function getCampStu(campStu) {
 //THUNK
 export function fetchCampStu(campId) {
     return function (dispatch) {
-        axios.get(`/api/campus/students/${campId}`)
+        axios.get(`/api/campus/${campId}`)
             .then(res => res.data)
             .then(campus => dispatch(getCampStu(campus))) // dispatch action
             .catch(err => console.log(err))

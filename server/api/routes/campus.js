@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
 
 
 
-router.get('/students/:id', (req, res, next) => { //finds all students for that campus with id of ..
+router.get('/:id', (req, res, next) => { //finds all students for that campus with id of ..
     const id = req.params.id;
     Students.findAll({
         where: {

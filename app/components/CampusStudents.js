@@ -1,6 +1,6 @@
-import React, { Link, Component } from 'react';
+import React, {  Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { fetchCampStu } from '../reducers/oneCampus';
 import { fetchCampi } from '../reducers/campi';
 import store from '../store';
@@ -54,7 +54,11 @@ class CampusStudents extends Component {
                                 return (
                                     <TableRow key={student.id}>
                                         <TableRowColumn>{student.id}</TableRowColumn>
-                                        <TableRowColumn>{student.fullName}</TableRowColumn>
+                                        <TableRowColumn>
+                                            <Link className= 'studentRow' to={`/campus/allstudents/${student.id}`}>
+                                            {student.fullName}
+                                            </Link>
+                                        </TableRowColumn>
                                         <TableRowColumn>{student.gpa}</TableRowColumn>
                                         <TableRowColumn> {this.props.campi.name}</TableRowColumn>
                                     </TableRow>

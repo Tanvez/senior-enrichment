@@ -9,19 +9,30 @@ router.get('/', (req, res, next) => {
         .findAll({
             include: [{
                 all: true
-            }]
+            }] // eager loading -> creates another key with `students` that has all students to that campus
         })
         .then(data => res.json(data))
         .catch(next);
 });
 
+// router.get('/:id', (req, res, next) => {
+//     const id = req.params.id;
+//     Campus.findById(id, {
+//         include: [{
+//             all: true
+//         }]
+//     }).then(data => res.json(data))
+//         .catch(next);
+// });
 
-router.get('/:id', (req, res, next) => {
+
+
+router.get('/students/:id', (req, res, next) => { //finds all students for that campus with id of ..
     const id = req.params.id;
-    Campus.findById(id, {
-        include: [{
-            all: true
-        }]
+    Students.findAll({
+        where: {
+            campusId: id
+        }
     }).then(data => res.json(data))
         .catch(next);
 });

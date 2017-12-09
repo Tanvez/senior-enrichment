@@ -10,7 +10,7 @@ import {
 } from 'material-ui/Table';
 
 function StudentList(props) {
-    console.log('all students running ')
+    console.log('all students running ', props.students)
     return (
         <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

@@ -8,12 +8,13 @@ const GET_STUDENT = 'GET_STUDENT';
 export function getStudent(student) {
     return { type: GET_STUDENT, student }
 }
-//thunk creators
+//THUNK
 export function fetchStudent(id) {
     return function (dispatch) {
         axios.get(`/api/students/${id}`)
             .then(res => res.data)
             .then(student => dispatch(getStudent(student)))
+            .catch(err => console.log(err))
     }
 }
 

@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import StudentList from './StudentList';
 import CampusList from './CampusList';
 import SingleStudent from './SingleStudent';
+import CampusStudents from './CampusStudents';
 import Home from './Home';
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
@@ -17,6 +18,15 @@ import {
     TableBody
 } from 'material-ui/Table';
 
+const styles = {
+    background: {
+        backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/ANDROMEDA_GALAXY.jpg/1280px-ANDROMEDA_GALAXY.jpg')",
+        width: '100%',
+        display: 'block',
+        height: '100%'
+    }
+}
+
 export default class Main extends Component {
 
     componentDidMount() {
@@ -30,15 +40,16 @@ export default class Main extends Component {
 
         return (
             <Router>
-                <div className="container-fluid">
+                <div className="container-fluid" >
                     <div className="col-xs-2">
                         <NavBar />
                     </div>
-                    <div className="col-xs-10">
+                    <div style={styles.background} className="col-xs-10">
                         <Switch>
                             <Route exact path='/campus/allstudents' component={StudentList} />
                             <Route path='/campus/allstudents/:id' component={SingleStudent} />
-                            <Route path='/campus' component={CampusList} />
+                            <Route exact path='/campus' component={CampusList} />
+                            <Route path='/campus/:id' component={CampusStudents} />
                             <Route path='/' component={Home} />
                         </Switch>
                     </div>

@@ -13,7 +13,8 @@ export function fetchCampuses() {
     return function (dispatch) {
         axios.get('/api/campus/')
             .then(res => res.data)
-            .then(Campuses => dispatch(getCampuses(Campuses)));
+            .then(Campuses => dispatch(getCampuses(Campuses)))
+            .catch(err => console.log(err))
     }
 }
 

@@ -33,6 +33,7 @@ router.get('/campi/:id', (req, res, next) => { //finds all students for that cam
         .catch(next);
 });
 
+
 //CAN ALSO BE USED TO GET SINGLE STUDENT
 // router.param('id', function(req,res,next,id){
 //     console.log('working?')

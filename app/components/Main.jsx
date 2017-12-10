@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+//components
 import StudentList from './StudentList';
 import CampusList from './CampusList';
 import SingleStudent from './SingleStudent';
 import CampusStudents from './CampusStudents';
 import Home from './Home';
+import AddStudent from './AddStudent';
+
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
 import { fetchCampuses } from '../reducers/campus';
@@ -36,6 +39,7 @@ export default class Main extends Component {
         store.dispatch(students);
         store.dispatch(campuses);
     }
+
     render() {
 
         return (
@@ -46,6 +50,7 @@ export default class Main extends Component {
                     </div>
                     <div style={styles.background} className="col-xs-10">
                         <Switch>
+                            <Route exact path='/campus/addstudent' component={AddStudent}/>
                             <Route exact path='/campus/allstudents' component={StudentList} />
                             <Route path='/campus/allstudents/:id' component={SingleStudent} />
                             <Route exact path='/campus' component={CampusList} />

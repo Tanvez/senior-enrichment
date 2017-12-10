@@ -29,6 +29,9 @@ const NavBar = (props) => {
                 <Link className="campusHome" to="/campus/allstudents">
                     <RaisedButton label="Student" primary={true} />
                 </Link>
+                <Link className='home' to="/campus/addstudent">
+                    <RaisedButton label="Add Students" primary={true} />
+                </Link>
                 <IconMenu
                     iconButtonElement={
                         <IconButton touch={true}>

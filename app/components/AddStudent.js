@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { fetchCampStu } from '../reducers/oneCampus';
 import store from '../store';
-import {writeStudent} from '../reducers/addStudent';
+import {writeStudent, postStudent} from '../reducers/addStudent';
 
 
 import {
@@ -34,17 +34,11 @@ console.log(props)
         <Divider />
         <TextField name='lName'  hintText="Last name" style={style} underlineShow={false} />
         <Divider />
-        <TextField name='emailß' hintText="Email address" style={style} underlineShow={false} />
+        <TextField name='email' hintText="Email address" style={style} underlineShow={false} />
         <Divider />
-        <TextField  hintText="Campus" style={style} underlineShow={false} />
-        <SelectField value ={props.choice} onChange={props.handleFirstChange} maxHeight={200}>
-            {
-                props.campus.map(campi=>{
-                    return(<MenuItem value={campi.id} key={campi.id} primaryText={campi.name}/>)
-                    }
-                )
-            }
-      </SelectField>
+        <TextField name='gpa' hintText="GPA" style={style} underlineShow={false} />
+        <Divider />
+        <TextField name='campusId' hintText="campus Id" style={style} underlineShow={false} />
       <div>
             <button type="submit">Submit</button>
           </div>
@@ -58,21 +52,34 @@ const mapStateToProps = function (state){
 }
 const mapDispatchToProps = function (dispatch, ownProps){
     return {
-        // handleFirstChange(evt){
-        //     console.log('tarrget',  evt.target.value)
-        //     dispatch(writeStudent(evt.target.value));
-        // }
+        handleChange(evt){
+            console.log('target',  evt.target)
+
+        },
 
         handleSubmit(evt){
-            evt.preventDefault();
-           studentObj= {
+        evt.preventDefault();
+
+          const students= {
             firstName : evt.target.fName.value,
             lastName:evt.target.lName.value, // connects to name tag in html
             email:evt.target.email.value,
-            campus: evt.target.campus.value
+            gpa:evt.target.gpa.value,
+            campusId: evt.target.campusId.value
            }
+           console.log('event', students)
+        //   const postStu =  postStudent(students);
+        //    dispatch(postStu);
         }
     }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddStudents))
+{/* <SelectField value ={1} onChange={props.handleChange} maxHeight={200}>
+{
+    props.campus.map(campi=>{
+        return(<MenuItem  value={campi.id} key={campi.id} primaryText={campi.name}/>)
+        }
+    )
+}
+</SelectField> */}

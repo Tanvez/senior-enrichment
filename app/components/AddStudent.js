@@ -30,13 +30,11 @@ function AddStudents(props) {
 console.log(props)
     return (<Paper zDepth={2}>
     <form onSubmit={props.handleSubmit}>
-        <TextField name='name' hintText="First name" style={style} underlineShow={false} />
+        <TextField name='fName' hintText="First name" style={style} underlineShow={false} />
         <Divider />
-        <TextField name='lname' hintText="Middle name" style={style} underlineShow={false} />
+        <TextField name='lName'  hintText="Last name" style={style} underlineShow={false} />
         <Divider />
-        <TextField  hintText="Last name" style={style} underlineShow={false} />
-        <Divider />
-        <TextField  hintText="Email address" style={style} underlineShow={false} />
+        <TextField name='emailß' hintText="Email address" style={style} underlineShow={false} />
         <Divider />
         <TextField  hintText="Campus" style={style} underlineShow={false} />
         <SelectField value ={props.choice} onChange={props.handleFirstChange} maxHeight={200}>
@@ -67,7 +65,12 @@ const mapDispatchToProps = function (dispatch, ownProps){
 
         handleSubmit(evt){
             evt.preventDefault();
-           console.log('event ',evt.target.lname.value);
+           studentObj= {
+            firstName : evt.target.fName.value,
+            lastName:evt.target.lName.value, // connects to name tag in html
+            email:evt.target.email.value,
+            campus: evt.target.campus.value
+           }
         }
     }
 }

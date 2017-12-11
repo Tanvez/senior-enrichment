@@ -6,7 +6,6 @@ import store from '../store';
 import {writeStudent, postStudent} from '../reducers/addStudent';
 import {getCampusId, campusSelector} from '../reducers/campusSelector';
 
-
 import {
     Table, TableHeader, TableHeaderColumn,
     TableRow,
@@ -19,19 +18,13 @@ import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-
-
 const style = {
     marginLeft: 20
 };
 
-
-
-
 function AddStudents(props) {
 const {campusValue} = props;
-console.log(props)
+console.log('add student running');
     return (<Paper zDepth={2}>
     <form onSubmit={props.handleSubmit}>
         <label ><font size="4">First Name</font></label>
@@ -48,21 +41,14 @@ console.log(props)
         <Divider />
         <div>
         <label><font size = '4'>Campuses </font></label>
-        <SelectField value ={props.selectCampus} onChange={props.handleChange} maxHeight={200}>
+        <SelectField value ={1} onChange={props.handleChange} maxHeight={200}>
          {
-        props.campus.map(campi=>{
-        return(<MenuItem  name= 'campusId' value={campi.id} key={campi.id} primaryText={campi.name}/>)
+            props.campus.map(campi=>{
+                return(<MenuItem  name= 'campusId' value={campi.id} key={campi.id} primaryText={campi.name}/>)
+                }
+            )
         }
-    )
-}
-</SelectField>
-          {/* <Field name="campus" component="select">
-            <option></option>
-            {props.campus.map(campi=>{
-                return(<option  key={campi.id}
-                    onChange={props.handleChange} value={campi.id}>{campi.name}</option>)
-            })}
-          </Field> */}
+        </SelectField>
         </div>
       <div>
             <button type="submit">Submit</button>
@@ -71,46 +57,30 @@ console.log(props)
     </Paper>)
 }
 
-
-
 const mapStateToProps = function (state){
     return {
             campus: state.campus}
 }
 const mapDispatchToProps = function (dispatch){
-
     return{
     handleChange(evt, index, value){
         dispatch(campusSelector(value))
         },
         handleSubmit(evt){
         evt.preventDefault();
-        console.log('adding',evt)
           const students= {
             firstName : evt.target.fName.value,
             lastName:evt.target.lName.value, // connects to name tag in html
             email:evt.target.email.value,
             gpa:evt.target.gpa.value,
-            campusId: evt.target.campusId.value,
-
+            campusId: store.getState().selectCampus
            }
-
             const postStu =  postStudent(students);
              dispatch(postStu);
-             console.log('adding', evt.target.campusId)
-            //  console.log('color',this.props)
-
+             console.log('adding',students)
         }
     }
 
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddStudents))
-{/* <SelectField value ={1} onChange={props.handleChange} maxHeight={200}>
-{
-    props.campus.map(campi=>{
-        return(<MenuItem  value={campi.id} key={campi.id} primaryText={campi.name}/>)
-        }
-    )
-}
-</SelectField> */}

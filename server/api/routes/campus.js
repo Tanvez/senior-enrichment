@@ -25,11 +25,7 @@ router.get('/:id', (req, res, next) => { //finds all students for that campus wi
     .catch(next);
 });
 
-router.post('/addstudent', (req,res,next)=>{
-Students.create(req.body)
-.then(data=>res.json(data))
-.catch(next);
-});
+
 
 // router.get('/:id', (req, res, next) => {
 //     const id = req.params.id;

@@ -32,7 +32,13 @@ router.get('/campi/:id', (req, res, next) => { //finds all students for that cam
         .then(data => res.json(data))
         .catch(next);
 });
-
+router.post('/addstudent', (req,res,next)=>{
+    Students.create(req.body)
+    .then(data=>{
+        console.log(data);
+        res.json(data)})
+    .catch(next);
+    });
 
 //CAN ALSO BE USED TO GET SINGLE STUDENT
 // router.param('id', function(req,res,next,id){

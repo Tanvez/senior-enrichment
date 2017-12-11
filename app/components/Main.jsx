@@ -50,7 +50,7 @@ export default class Main extends Component {
                     </div>
                     <div style={styles.background} className="col-xs-10">
                         <Switch>
-                            <Route exact path='/campus/addstudent' component={AddStudent}/>
+                            <Route exact path='/students/addstudent' component={AddStudent}/>
                             <Route exact path='/campus/allstudents' component={StudentList} />
                             <Route path='/campus/allstudents/:id' component={SingleStudent} />
                             <Route exact path='/campus' component={CampusList} />

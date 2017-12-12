@@ -6,7 +6,7 @@ import { fetchCampi } from '../reducers/campi';
 import { fetchStudents } from '../reducers/studentsReducer';
 import store from '../store';
 import axios from 'axios';
-
+import { fetchCampuses } from '../reducers/campus';
 import {
     Table, TableHeader, TableHeaderColumn,
     TableRow,
@@ -31,6 +31,7 @@ class CampusStudents extends Component {
             id: 0,
         }
         this.handleDelete = this.handleDelete.bind(this)
+        this.handleDeleteCampus = this.handleDeleteCampus.bind(this)
     }
     componentDidMount() {
         const campusStudents = fetchCampStu(this.props.match.params.id)
@@ -50,6 +51,17 @@ class CampusStudents extends Component {
             })
             .catch(err => console.log(err))
     }
+    handleDeleteCampus(evt) {
+        evt.preventDefault();
+        const id = evt.target.value;
+        axios.delete(`/api/campus/deletecampus/${id}`)
+            .then(() => {
+                console.log('hitting fetch', this.state.id)
+                store.dispatch(fetchCampStu(this.state.id))
+                store.dispatch(fetchStudents()); // updates store
+            })
+            .catch(err => console.log(err))
+    }
 
     render() {
         const students = store.getState().campusStudents;
@@ -58,7 +70,7 @@ class CampusStudents extends Component {
 
             <Paper>
                 {this.props.campi.name}
-                <button value={this.props.campi.id} > Delete campus</button>
+                {(students.length === 0) ? <Link to={'/campus'}><button onClick={this.handleDeleteCampus} value={this.props.campi.id} >Delete Campus</button></Link> : ''}
                 <Table>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>

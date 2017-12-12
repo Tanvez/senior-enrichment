@@ -34,7 +34,7 @@ router.post('/addcampus', (req, res, next) => {
 })
 
 router.delete('/deletecampus/:id', (req, res, next) => {
-    Students.destroy({
+    Campus.destroy({
         where: {
             id: req.params.id
         }

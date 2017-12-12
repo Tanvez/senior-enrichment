@@ -7,6 +7,7 @@ import SingleStudent from './SingleStudent';
 import CampusStudents from './CampusStudents';
 import Home from './Home';
 import AddStudent from './AddStudent';
+import AddCampus from './addCampus';
 
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
@@ -41,7 +42,6 @@ export default class Main extends Component {
     }
 
     render() {
-
         return (
             <Router>
                 <div className="container-fluid" >
@@ -50,7 +50,8 @@ export default class Main extends Component {
                     </div>
                     <div style={styles.background} className="col-xs-10">
                         <Switch>
-                            <Route exact path='/students/addstudent' component={AddStudent}/>
+                            <Route exact path='/students/addstudent' component={AddStudent} />
+                            <Route exact path='/campus/addcampus' component={AddCampus} />
                             <Route exact path='/campus/allstudents' component={StudentList} />
                             <Route path='/campus/allstudents/:id' component={SingleStudent} />
                             <Route exact path='/campus' component={CampusList} />

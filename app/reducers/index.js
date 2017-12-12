@@ -5,7 +5,9 @@ import student from './oneStudent';
 import campusStudents from './oneCampus';
 import campi from './campi';
 import newStudent from './addStudent';
-import selectCampus from  './campusSelector';
+import selectCampus from './campusSelector';
+
+
 
 const reducers = combineReducers({
   students,
@@ -15,8 +17,6 @@ const reducers = combineReducers({
   campi,
   newStudent,
   selectCampus
-
 });
 
 export default reducers;
-

@@ -29,8 +29,11 @@ const NavBar = (props) => {
                 <Link className="campusHome" to="/campus/allstudents">
                     <RaisedButton label="Student" primary={true} />
                 </Link>
-                <Link className='home' to="/students/addstudent">
+                <Link className='addstu' to="/students/addstudent">
                     <RaisedButton label="Add Students" primary={true} />
+                </Link>
+                <Link className='addCamp' to="/campus/addcampus">
+                    <RaisedButton label="Add Campus" primary={true} />
                 </Link>
                 <IconMenu
                     iconButtonElement={

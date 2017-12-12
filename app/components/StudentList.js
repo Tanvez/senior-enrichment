@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import { deleteStudent } from '../reducers/deleteStudent';
+import axios from 'axios';
+import { fetchStudents } from '../reducers/studentsReducer';
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -9,8 +12,12 @@ import {
     TableBody
 } from 'material-ui/Table';
 
+import Delete from 'material-ui/svg-icons/action/delete';
+import IconButton from 'material-ui/IconButton';
+
+
 function StudentList(props) {
-    console.log('all students running ', props.students)
+    console.log('all students running ', props)
     return (
         <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -18,7 +25,8 @@ function StudentList(props) {
                     <TableHeaderColumn>ID</TableHeaderColumn>
                     <TableHeaderColumn>Name</TableHeaderColumn>
                     <TableHeaderColumn>GPA</TableHeaderColumn>
-                    <TableHeaderColumn>Attending</TableHeaderColumn>
+                    <TableHeaderColumn>Edit</TableHeaderColumn>
+                    <TableHeaderColumn>Delete </TableHeaderColumn>
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
@@ -34,9 +42,9 @@ function StudentList(props) {
                                     {student.fullName}
                                 </Link>
                             </TableRowColumn>
-
                             <TableRowColumn>{student.gpa}</TableRowColumn>
-                            <TableRowColumn>{student.campus.name}</TableRowColumn>
+                            <TableRowColumn>edit</TableRowColumn>
+                            <TableRowColumn> <button onClick={props.handleDelete} value={student.id}>Delete</button> </TableRowColumn>
 
                         </TableRow>
                     )
@@ -49,5 +57,20 @@ function StudentList(props) {
 const mapStateToProps = function (state) {
     return { students: state.students }
 };
+const mapDispatchToProps = function (dispatch, ownProps) {
+    return {
+        handleDelete(evt) {
+            evt.preventDefault();
+            const id = evt.target.value;
+            axios.delete(`/api/students/deletestudent/${id}`)
+                .then(() => {
+                    console.log('hitting fetch')
+                    dispatch(fetchStudents())
+                })
+                .catch(err => console.log(err))
+        }
+    }
+}
 
-export default withRouter(connect(mapStateToProps)(StudentList));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StudentList));

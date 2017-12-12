@@ -1,10 +1,11 @@
-import React, {  Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { fetchCampStu } from '../reducers/oneCampus';
 import { fetchCampi } from '../reducers/campi';
 import store from '../store';
-
+import Delete from 'material-ui/svg-icons/action/delete';
+import IconButton from 'material-ui/IconButton';
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -44,7 +45,8 @@ class CampusStudents extends Component {
                             <TableHeaderColumn>ID</TableHeaderColumn>
                             <TableHeaderColumn>Name</TableHeaderColumn>
                             <TableHeaderColumn>GPA</TableHeaderColumn>
-                            <TableHeaderColumn>Attending</TableHeaderColumn>
+                            <TableHeaderColumn>Edit</TableHeaderColumn>
+                            <TableHeaderColumn>Delete </TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
@@ -55,12 +57,13 @@ class CampusStudents extends Component {
                                     <TableRow key={student.id}>
                                         <TableRowColumn>{student.id}</TableRowColumn>
                                         <TableRowColumn>
-                                            <Link className= 'studentRow' to={`/campus/allstudents/${student.id}`}>
-                                            {student.fullName}
+                                            <Link className='studentRow' to={`/campus/allstudents/${student.id}`}>
+                                                {student.fullName}
                                             </Link>
                                         </TableRowColumn>
                                         <TableRowColumn>{student.gpa}</TableRowColumn>
-                                        <TableRowColumn> {this.props.campi.name}</TableRowColumn>
+                                        <TableRowColumn>edit</TableRowColumn>
+                                        <TableRowColumn>  <IconButton ><Delete /></IconButton> </TableRowColumn>
                                     </TableRow>
                                 )
                             })

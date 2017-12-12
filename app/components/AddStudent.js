@@ -1,10 +1,14 @@
-import React, {  Component } from 'react';
+import React, { Component } from 'react';
+import axios from 'axios'
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { fetchCampStu } from '../reducers/oneCampus';
+import { Link } from 'react-router-dom';
+import { fetchCampuses } from '../reducers/campus';
+// import { fetchCampStu } from '../reducers/oneCampus';
 import store from '../store';
-import {writeStudent, postStudent} from '../reducers/addStudent';
-import {getCampusId, campusSelector} from '../reducers/campusSelector';
+// import { writeStudent, postStudent } from '../reducers/addStudent';
+import { getCampusId, campusSelector } from '../reducers/campusSelector';
+import { addStudent } from '../reducers/studentsReducer';
+import { fetchStudents } from '../reducers/studentsReducer';
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -22,65 +26,96 @@ const style = {
     marginLeft: 20
 };
 
-function AddStudents(props) {
-const {campusValue} = props;
-console.log('add student running');
-    return (<Paper zDepth={2}>
-    <form onSubmit={props.handleSubmit}>
-        <label ><font size="4">First Name</font></label>
-        <TextField name='fName' hintText="First name" style={style} underlineShow={false} />
-        <Divider />
-        <label><font size="4">Last Name</font></label>
-        <TextField name='lName'  hintText="Last name" style={style} underlineShow={false} />
-        <Divider />
-        <label> <font size="4">Email</font></label>
-        <TextField name='email' hintText="Email address" style={style} underlineShow={false} />
-        <Divider />
-        <label><font size="4"> GPA</font></label>
-        <TextField name='gpa' hintText="GPA" style={style} underlineShow={false} />
-        <Divider />
-        <div>
-        <label><font size = '4'>Campuses </font></label>
-        <SelectField value ={1} onChange={props.handleChange} maxHeight={200}>
-         {
-            props.campus.map(campi=>{
-                return(<MenuItem  name= 'campusId' value={campi.id} key={campi.id} primaryText={campi.name}/>)
-                }
-            )
+export default class AddStudents extends Component {
+    constructor() {
+        super();
+        this.state = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            gpa: 0,
+            campuses: [],
+            value: 1,
+            // clicks: 0,
+            // show: true
         }
-        </SelectField>
-        </div>
-      <div>
-            <button type="submit">Submit</button>
-          </div>
-      </form>
-    </Paper>)
-}
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.IncrementItem = this.IncrementItem.bind(this);
+        // this.DecreaseItem = this.DecreaseItem.bind(this);
+        // this.ToggleClick = this.ToggleClick.bind(this);
 
-const mapStateToProps = function (state){
-    return {
-            campus: state.campus}
-}
-const mapDispatchToProps = function (dispatch){
-    return{
-    handleChange(evt, index, value){
-        dispatch(campusSelector(value))
-        },
-        handleSubmit(evt){
-        evt.preventDefault();
-          const students= {
-            firstName : evt.target.fName.value,
-            lastName:evt.target.lName.value, // connects to name tag in html
-            email:evt.target.email.value,
-            gpa:evt.target.gpa.value,
-            campusId: store.getState().selectCampus
-           }
-            const postStu =  postStudent(students);
-             dispatch(postStu);
-             console.log('adding',students)
-        }
+    }
+    componentDidMount() {
+        axios.get('/api/campus/')
+            .then(res => res.data)
+            .then(campuses => {
+                this.setState({ campuses })
+            })
+            .catch(err => console.log(err))
+
+    }
+    handleChange(evt, index, value) {
+        this.setState({ value: value });
     }
 
+    handleSubmit(evt) {
+        evt.preventDefault();
+        const student = {
+            firstName: this.state.firstName,
+            lastName: evt.target.lName.value, // connects to name tag in html
+            email: evt.target.email.value,
+            gpa: evt.target.gpa.value,
+            campusId: this.state.value
+        }
+
+        axios.post('/api/students/addstudent', student)
+            .then(res => res.data)
+            .then(student => {
+                store.dispatch(addStudent(student));
+            })
+        console.log('posting', student);
+        store.dispatch(fetchCampuses());
+    }
+
+    // IncrementItem() { // trying to implement a tick
+    //     this.setState({ clicks: this.state.clicks + 1 });
+    // }
+    // DecreaseItem() {
+    //     this.setState({ clicks: this.state.clicks - 1 });
+    // }
+    // ToggleClick() {
+    //     this.setState({ show: !this.state.show });
+    // }
+
+    render() {
+        console.log('campus', this.state)
+        return (
+            <Paper zDepth={2}>
+                <form onSubmit={this.handleSubmit}>
+                    <label ><font size="4">First Name</font></label>
+                    <TextField onChange={(evt) => this.setState({ firstName: evt.target.value })} name='fName' hintText="First name" style={style} underlineShow={false} />
+                    <Divider />
+                    <label><font size="4">Last Name</font></label>
+                    <TextField onChange={(evt) => this.setState({ lastName: evt.target.value })} name='lName' hintText="Last name" style={style} underlineShow={false} />
+                    <Divider />
+                    <label> <font size="4">Email</font></label>
+                    <TextField onChange={(evt) => this.setState({ email: evt.target.value })} name='email' hintText="Email address" style={style} underlineShow={false} />
+                    <Divider />
+                    <label><font size="4"> GPA</font></label>
+                    <TextField onChange={(evt) => this.setState({ gpa: evt.target.value })} name='gpa' hintText="GPA" style={style} underlineShow={false} />
+                    <Divider />
+                    <SelectField value={this.state.value} onChange={this.handleChange} maxHeight={200}>
+                        {this.state.campuses.map(campi => {
+                            return <MenuItem name='campusId' value={campi.id} key={campi.id} primaryText={campi.name} />
+                        })
+                        }
+                    </SelectField>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </Paper>)
+    }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddStudents))

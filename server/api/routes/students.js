@@ -32,13 +32,26 @@ router.get('/campi/:id', (req, res, next) => { //finds all students for that cam
         .then(data => res.json(data))
         .catch(next);
 });
-router.post('/addstudent', (req,res,next)=>{
+router.post('/addstudent', (req, res, next) => {
     Students.create(req.body)
-    .then(data=>{
-        console.log(data);
-        res.json(data)})
-    .catch(next);
-    });
+        .then(data => {
+            console.log(data);
+            res.json(data)
+        })
+        .catch(next);
+});
+
+router.delete('/deletestudent/:id', (req, res, next) => {
+    console.log(req.params.id)
+    Students.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(numAffectedRows => {
+        res.json(numAffectedRows);
+    }).catch(next);
+
+})
 
 //CAN ALSO BE USED TO GET SINGLE STUDENT
 // router.param('id', function(req,res,next,id){

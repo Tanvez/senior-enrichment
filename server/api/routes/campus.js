@@ -22,9 +22,16 @@ router.get('/:id', (req, res, next) => { //finds all students for that campus wi
             campusId: id
         }
     }).then(data => res.json(data))
-    .catch(next);
+        .catch(next);
 });
 
+router.post('/addcampus', (req, res, next) => {
+    Campus.create(req.body)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(next);
+})
 
 
 // router.get('/:id', (req, res, next) => {

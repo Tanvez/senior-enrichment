@@ -36,14 +36,10 @@ export default class AddStudents extends Component {
             gpa: 0,
             campuses: [],
             value: 1,
-            // clicks: 0,
-            // show: true
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.IncrementItem = this.IncrementItem.bind(this);
-        // this.DecreaseItem = this.DecreaseItem.bind(this);
-        // this.ToggleClick = this.ToggleClick.bind(this);
 
     }
     componentDidMount() {
@@ -77,16 +73,6 @@ export default class AddStudents extends Component {
         console.log('posting', student);
         store.dispatch(fetchCampuses());
     }
-
-    // IncrementItem() { // trying to implement a tick
-    //     this.setState({ clicks: this.state.clicks + 1 });
-    // }
-    // DecreaseItem() {
-    //     this.setState({ clicks: this.state.clicks - 1 });
-    // }
-    // ToggleClick() {
-    //     this.setState({ show: !this.state.show });
-    // }
 
     render() {
         console.log('campus', this.state)

@@ -42,7 +42,6 @@ router.post('/addstudent', (req, res, next) => {
 });
 
 router.delete('/deletestudent/:id', (req, res, next) => {
-    console.log(req.params.id)
     Students.destroy({
         where: {
             id: req.params.id
@@ -53,23 +52,18 @@ router.delete('/deletestudent/:id', (req, res, next) => {
 
 })
 
-//CAN ALSO BE USED TO GET SINGLE STUDENT
-// router.param('id', function(req,res,next,id){
-//     console.log('working?')
-//   Students.findById(id)
-//   .then(student=> {
-//       if(!student){
-//       const err = Error('Student not found');
-//       err.status = 404;
-//       throw err;
-//     }
-//     req.student = student;
-//     next();
-//   })
-//   .catch(next);
-// })
-
-// router.get('/:id', function (req, res){
-//     res.json(req.student)
-// })
-
+router.put('/updatestudent/:id', (req, res, next) => {
+    Students.update(req.body, {
+        where: {
+            id: req.params.id
+        },
+        returning: true
+    })
+        .then(arr => {
+            res.json({
+                message: 'Updated successfully',
+                article: arr[1][0]
+            });
+        })
+        .catch(next);
+})

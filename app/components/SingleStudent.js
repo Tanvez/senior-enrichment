@@ -2,6 +2,7 @@ import React, { Link, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchStudent } from '../reducers/oneStudent';
+import { fetchStudents } from '../reducers/studentsReducer'
 import store from '../store';
 
 import {
@@ -17,6 +18,16 @@ class SingleStudent extends Component {
         const single = fetchStudent((this.props.match.params.id));
         store.dispatch(single);
     }
+    handleDelete(evt) {
+        evt.preventDefault();
+        const id = evt.target.value;
+        axios.delete(`/api/students/deletestudent/${id}`)
+            .then(() => {
+                console.log('hitting fetch')
+                store.dispatch(fetchStudents())
+            })
+            .catch(err => console.log(err))
+    }
 
     render() {
         console.log('single student is running', this.props.campus && this.props.campus.name)
@@ -28,6 +39,8 @@ class SingleStudent extends Component {
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         <TableHeaderColumn>GPA</TableHeaderColumn>
                         <TableHeaderColumn>Attending</TableHeaderColumn>
+                        <TableHeaderColumn>Edit</TableHeaderColumn>
+                        <TableHeaderColumn>Delete </TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false}>
@@ -41,6 +54,8 @@ class SingleStudent extends Component {
                         <TableRowColumn>{this.props.campus && this.props.campus.name //have to short circuit because this.props.campus.name will throw an error instead of undefined
                             // this.props will produce undefined
                         }</TableRowColumn>
+                        <TableRowColumn>edit</TableRowColumn>
+                        <TableRowColumn> <button onClick={this.handleDelete} value={this.props.student.id}>Delete</button> </TableRowColumn>
                     </TableRow>
                 </TableBody>
             </Table>

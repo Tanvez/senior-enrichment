@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { fetchCampStu } from '../reducers/oneCampus';
 import { fetchCampi } from '../reducers/campi';
+import { fetchStudents } from '../reducers/studentsReducer';
 import store from '../store';
-import Delete from 'material-ui/svg-icons/action/delete';
-import IconButton from 'material-ui/IconButton';
+import axios from 'axios';
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -25,20 +25,40 @@ const style = {
 
 class CampusStudents extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            id: 0,
+        }
+        this.handleDelete = this.handleDelete.bind(this)
+    }
     componentDidMount() {
         const campusStudents = fetchCampStu(this.props.match.params.id)
         const campi = fetchCampi(this.props.match.params.id)
         store.dispatch(campi);
         store.dispatch(campusStudents);
+        this.setState({ id: this.props.match.params.id })
     }
+    handleDelete(evt) {
+        evt.preventDefault();
+        const id = evt.target.value;
+        axios.delete(`/api/students/deletestudent/${id}`)
+            .then(() => {
+                console.log('hitting fetch', this.state.id)
+                store.dispatch(fetchCampStu(this.state.id))
+                store.dispatch(fetchStudents()); // updates store
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
         const students = store.getState().campusStudents;
 
-        console.log('students', this.props);
         return (
 
             <Paper>
                 {this.props.campi.name}
+                <button value={this.props.campi.id} > Delete campus</button>
                 <Table>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
@@ -52,7 +72,6 @@ class CampusStudents extends Component {
                     <TableBody displayRowCheckbox={false}>
                         {
                             students && students.map(student => {
-                                console.log('inside map', student)
                                 return (
                                     <TableRow key={student.id}>
                                         <TableRowColumn>{student.id}</TableRowColumn>
@@ -63,7 +82,7 @@ class CampusStudents extends Component {
                                         </TableRowColumn>
                                         <TableRowColumn>{student.gpa}</TableRowColumn>
                                         <TableRowColumn>edit</TableRowColumn>
-                                        <TableRowColumn>  <IconButton ><Delete /></IconButton> </TableRowColumn>
+                                        <TableRowColumn> <button onClick={this.handleDelete} value={student.id}>Delete</button> </TableRowColumn>
                                     </TableRow>
                                 )
                             })
@@ -82,4 +101,5 @@ const mapToState = function (state) {
         campi: state.campi
     }
 }
+
 export default withRouter(connect(mapToState)(CampusStudents));

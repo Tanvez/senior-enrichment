@@ -33,13 +33,30 @@ router.post('/addcampus', (req, res, next) => {
         .catch(next);
 })
 
+router.delete('/deletecampus/:id', (req, res, next) => {
+    Students.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(numAffectedRows => {
+        res.json(numAffectedRows);
+    }).catch(next);
 
-// router.get('/:id', (req, res, next) => {
-//     const id = req.params.id;
-//     Campus.findById(id, {
-//         include: [{
-//             all: true
-//         }]
-//     }).then(data => res.json(data))
-//         .catch(next);
-// });
+})
+
+router.put('/updatecampus/:id', (req, res, next) => {
+    Campus.update(req.body, {
+        where: {
+            id: req.params.id
+        },
+        returning: true
+    })
+        .then(arr => {
+            res.json({
+                message: 'Updated successfully',
+                article: arr[1][0]
+            });
+        })
+        .catch(next);
+})
+

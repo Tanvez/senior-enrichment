@@ -27,10 +27,10 @@ const NavBar = (props) => {
                     <RaisedButton label="Campuses" primary={true} />
                 </Link>
                 <Link className="campusHome" to="/campus/allstudents">
-                    <RaisedButton label="All Student" primary={true} />
+                    <RaisedButton label="All Students" primary={true} />
                 </Link>
                 <Link className='addstu' to="/students/addstudent">
-                    <RaisedButton label="Add Students" primary={true} />
+                    <RaisedButton label="Add Student" primary={true} />
                 </Link>
                 <Link className='addCamp' to="/campus/addcampus">
                     <RaisedButton label="Add Campus" primary={true} />

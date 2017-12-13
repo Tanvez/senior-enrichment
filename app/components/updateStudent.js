@@ -60,7 +60,8 @@ export default class AddStudents extends Component {
             gpa: +evt.target.gpa.value,
             campusId: this.state.value
         }
-        const studentId = store.getState().newStudent
+        const studentId = store.getState().newStudent;
+        console.log('puting', store.getState());
         axios.put(`/api/students/updatestudent/${studentId}`, student)
             .then(res => res.data)
             .then(student => {
@@ -68,7 +69,7 @@ export default class AddStudents extends Component {
                 return store.dispatch(addStudent(student));
             })
             .then(() => this.props.history.push('/campus/allstudents')); // cause the submit button to reroute to this page
-        console.log('puting', student);
+
 
     }
     render() {

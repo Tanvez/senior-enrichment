@@ -2,9 +2,10 @@ import React, { Link, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchStudent } from '../reducers/oneStudent';
-import { fetchStudents } from '../reducers/studentsReducer'
+import { fetchStudents } from '../reducers/studentsReducer';
+import { writeStudent } from '../reducers/addStudent';
 import store from '../store';
-import axios from 'axios'
+import axios from 'axios';
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -14,6 +15,11 @@ import {
 } from 'material-ui/Table';
 
 class SingleStudent extends Component {
+    constructor(props) {
+        super(props);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
 
     componentDidMount() {
         const single = fetchStudent((this.props.match.params.id));
@@ -25,9 +31,16 @@ class SingleStudent extends Component {
         axios.delete(`/api/students/deletestudent/${id}`)
             .then(() => {
                 console.log('hitting fetch')
-                store.dispatch(fetchStudents())
+                return store.dispatch(fetchStudents())
             })
+            .then(() => this.props.history.push('/campus/allstudents'))
             .catch(err => console.log(err))
+    }
+    handleClick(evt) {
+        evt.preventDefault();
+        store.dispatch(writeStudent(evt.target.value))
+        console.log('clicking', store.getState().newStudent)
+        return this.props.history.push('/students/updatestudent')
     }
 
     render() {
@@ -55,7 +68,7 @@ class SingleStudent extends Component {
                         <TableRowColumn>{this.props.campus && this.props.campus.name //have to short circuit because this.props.campus.name will throw an error instead of undefined
                             // this.props will produce undefined
                         }</TableRowColumn>
-                        <TableRowColumn><button>edit</button></TableRowColumn>
+                        <TableRowColumn><button onClick={this.handleClick} value={this.props.student.id}>edit</button></TableRowColumn>
                         <TableRowColumn> <button onClick={this.handleDelete} value={this.props.student.id}>Delete</button> </TableRowColumn>
                     </TableRow>
                 </TableBody>

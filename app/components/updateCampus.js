@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import store from '../store';
-import { writeCampus } from '../reducers/addCampus';
-import { fetchStudents } from '../reducers/studentsReducer';
 import { fetchCampuses } from '../reducers/campus';
+import { writeCampus } from '../reducers/addCampus';
 //material ui
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -17,12 +16,11 @@ import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
-
 const style = {
     marginLeft: 20
 };
 
-export default class AddCampus extends Component {
+export default class updateCampus extends Component {
     constructor() {
         super();
         this.state = {
@@ -34,18 +32,21 @@ export default class AddCampus extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        axios.post('/api/campus/addcampus', this.state)
+        const campusId = store.getState().campi.id;
+        console.log('update campus id', campusId)
+        axios.put(`/api/campus/updatecampus/${campusId}`, this.state)// could refactor into a thunk but might break it...
             .then(res => res.data)
             .then(campus => {
-                store.dispatch(writeCampus(campus))// afraid to delete dont know what will happen...
-                return store.dispatch(fetchCampuses());// update store to rerender
+                store.dispatch(writeCampus(campus))
+                return store.dispatch(fetchCampuses());//for rerendering
             })
-            .then(() => this.props.history.push('/campus'));
-        fetchStudents();
+            .then(() => this.props.history.push('/campus'));//for redirecting to campus page
+
     }
     render() {
         return (
             <Paper zDepth={2}>
+                <label ><font size="6">Update Campus Form</font></label>
                 <form onSubmit={this.handleSubmit}>
                     <label ><font size="4">Campus Name</font></label>
                     <TextField onChange={(evt) => this.setState({ name: evt.target.value })} name='campusName' hintText="Campus Name" style={style} underlineShow={false} />

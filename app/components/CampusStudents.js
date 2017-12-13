@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { fetchCampStu } from '../reducers/oneCampus';
 import { fetchCampi } from '../reducers/campi';
 import { fetchStudents } from '../reducers/studentsReducer';
+import { writeStudent } from '../reducers/addStudent';
 import store from '../store';
 import axios from 'axios';
 import { fetchCampuses } from '../reducers/campus';
@@ -25,17 +26,21 @@ const style = {
 
 class CampusStudents extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             id: 0,
         }
         this.handleDelete = this.handleDelete.bind(this)
         this.handleDeleteCampus = this.handleDeleteCampus.bind(this)
+        this.handleClick = this.handleClick.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
     componentDidMount() {
-        const campusStudents = fetchCampStu(this.props.match.params.id)
-        const campi = fetchCampi(this.props.match.params.id)
+        const campusStudents = fetchCampStu(this.props.match.params.id)//gets all students from database with matching campus id
+        const campi = fetchCampi(this.props.match.params.id)//fetch one campus info base on id
+
+        // dispatched to the store
         store.dispatch(campi);
         store.dispatch(campusStudents);
         this.setState({ id: this.props.match.params.id })
@@ -58,9 +63,22 @@ class CampusStudents extends Component {
             .then(() => {
                 console.log('hitting fetch', this.state.id)
                 store.dispatch(fetchCampStu(this.state.id))
-                store.dispatch(fetchStudents()); // updates store
+                return store.dispatch(fetchCampuses()) // updates store
+            })
+            .then(() => {
+                this.props.history.push('/campus'); // redirects to campus list after hitting submit/delete 
             })
             .catch(err => console.log(err))
+    }
+    handleClick(evt) {
+        evt.preventDefault();
+        store.dispatch(writeStudent(evt.target.value))
+        console.log('clicking', store.getState().newStudent)
+        this.props.history.push('/students/updatestudent')
+    }
+    handleEdit(evt) {
+        console.log('clicking', store.getState().campi);
+        this.props.history.push('/campus/updatecampus');
     }
 
     render() {
@@ -69,8 +87,10 @@ class CampusStudents extends Component {
         return (
 
             <Paper>
-                {this.props.campi.name}
-                {(students.length === 0) ? <Link to={'/campus'}><button onClick={this.handleDeleteCampus} value={this.props.campi.id} >Delete Campus</button></Link> : ''}
+                {this.props.campi && this.props.campi.name}
+                {(students.length === 0) ? <Link to={'/'}><button onClick={this.handleDeleteCampus} value={this.props.campi.id} >
+                    Delete Campus</button></Link> : ''}
+                <button onClick={this.handleEdit}>Edit</button>
                 <Table>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
@@ -93,7 +113,7 @@ class CampusStudents extends Component {
                                             </Link>
                                         </TableRowColumn>
                                         <TableRowColumn>{student.gpa}</TableRowColumn>
-                                        <TableRowColumn>edit</TableRowColumn>
+                                        <TableRowColumn><button onClick={this.handleClick} value={student.id}> edit</button></TableRowColumn>
                                         <TableRowColumn> <button onClick={this.handleDelete} value={student.id}>Delete</button> </TableRowColumn>
                                     </TableRow>
                                 )

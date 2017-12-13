@@ -8,7 +8,9 @@ import CampusStudents from './CampusStudents';
 import Home from './Home';
 import AddStudent from './AddStudent';
 import AddCampus from './addCampus';
-
+import updateStudent from './updateStudent';
+import updateCampus from './updateCampus';
+//store stuff
 import store from '../store';
 import { fetchStudents } from '../reducers/studentsReducer';
 import { fetchCampuses } from '../reducers/campus';
@@ -50,9 +52,11 @@ export default class Main extends Component {
                     </div>
                     <div style={styles.background} className="col-xs-10">
                         <Switch>
+                            <Route exact path='/campus/updatecampus' component={updateCampus} />
                             <Route exact path='/students/addstudent' component={AddStudent} />
                             <Route exact path='/campus/addcampus' component={AddCampus} />
                             <Route exact path='/campus/allstudents' component={StudentList} />
+                            <Route path='/students/updatestudent' component={updateStudent} />
                             <Route path='/campus/allstudents/:id' component={SingleStudent} />
                             <Route exact path='/campus' component={CampusList} />
                             <Route path='/campus/:id' component={CampusStudents} />

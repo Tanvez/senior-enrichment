@@ -68,8 +68,9 @@ export default class AddStudents extends Component {
         axios.post('/api/students/addstudent', student)
             .then(res => res.data)
             .then(student => {
-                store.dispatch(addStudent(student));
+                return store.dispatch(addStudent(student));
             })
+            .then(() => this.props.history.push('/campus/allstudents'));
         console.log('posting', student);
         store.dispatch(fetchCampuses());
     }

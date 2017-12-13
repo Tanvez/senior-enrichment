@@ -24,10 +24,10 @@ const NavBar = (props) => {
                 <FontIcon className="muidocs-icon-custom-sort" />
                 <ToolbarSeparator />
                 <Link className="campus" to="/campus">
-                    <RaisedButton label="Campus" primary={true} />
+                    <RaisedButton label="Campuses" primary={true} />
                 </Link>
                 <Link className="campusHome" to="/campus/allstudents">
-                    <RaisedButton label="Student" primary={true} />
+                    <RaisedButton label="All Student" primary={true} />
                 </Link>
                 <Link className='addstu' to="/students/addstudent">
                     <RaisedButton label="Add Students" primary={true} />

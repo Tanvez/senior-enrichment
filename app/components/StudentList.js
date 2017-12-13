@@ -4,7 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { deleteStudent } from '../reducers/deleteStudent';
 import axios from 'axios';
 import { fetchStudents } from '../reducers/studentsReducer';
-
+import { writeStudent } from '../reducers/addStudent';
+import store from '../store'
 import {
     Table, TableHeader, TableHeaderColumn,
     TableRow,
@@ -43,7 +44,7 @@ function StudentList(props) {
                                 </Link>
                             </TableRowColumn>
                             <TableRowColumn>{student.gpa}</TableRowColumn>
-                            <TableRowColumn>edit</TableRowColumn>
+                            <TableRowColumn><button onClick={props.handleClick} value={student.id}> edit</button></TableRowColumn>
                             <TableRowColumn> <button onClick={props.handleDelete} value={student.id}>Delete</button> </TableRowColumn>
 
                         </TableRow>
@@ -65,9 +66,15 @@ const mapDispatchToProps = function (dispatch, ownProps) {
             axios.delete(`/api/students/deletestudent/${id}`)
                 .then(() => {
                     console.log('hitting fetch')
-                    dispatch(fetchStudents())
+                    return dispatch(fetchStudents())
                 })
                 .catch(err => console.log(err))
+        },
+        handleClick(evt) {
+            evt.preventDefault();
+            dispatch(writeStudent(evt.target.value))
+            console.log('clicking', store.getState().newStudent)
+            return ownProps.history.push('/students/updatestudent')
         }
     }
 }

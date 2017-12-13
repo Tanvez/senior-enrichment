@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { fetchStudent } from '../reducers/oneStudent';
 import { fetchStudents } from '../reducers/studentsReducer'
 import store from '../store';
+import axios from 'axios'
 
 import {
     Table, TableHeader, TableHeaderColumn,
@@ -54,7 +55,7 @@ class SingleStudent extends Component {
                         <TableRowColumn>{this.props.campus && this.props.campus.name //have to short circuit because this.props.campus.name will throw an error instead of undefined
                             // this.props will produce undefined
                         }</TableRowColumn>
-                        <TableRowColumn>edit</TableRowColumn>
+                        <TableRowColumn><button>edit</button></TableRowColumn>
                         <TableRowColumn> <button onClick={this.handleDelete} value={this.props.student.id}>Delete</button> </TableRowColumn>
                     </TableRow>
                 </TableBody>

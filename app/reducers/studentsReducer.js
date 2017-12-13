@@ -3,6 +3,7 @@ import axios from 'axios';
 //Action Types
 const GET_STUDENTS = 'GET_STUDENTS';
 const ADD_STUDENT = 'ADD_STUDENT';
+
 //ACTION CREATORS
 
 export function getStudents(students) {
@@ -11,6 +12,8 @@ export function getStudents(students) {
 export function addStudent(addStudent) {
     return { type: ADD_STUDENT, addStudent }
 }
+
+
 //thunk creators
 export function fetchStudents() {
     return function (dispatch) {
@@ -19,6 +22,9 @@ export function fetchStudents() {
             .then(students => dispatch(getStudents(students)))
     }
 }
+
+
+
 
 function studentReducer(state = [], action) {
     switch (action.type) {

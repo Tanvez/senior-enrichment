@@ -92,6 +92,7 @@ export default class AddStudents extends Component {
                     <label><font size="4"> GPA</font></label>
                     <TextField onChange={(evt) => this.setState({ gpa: evt.target.value })} name='gpa' hintText="GPA" style={style} underlineShow={false} />
                     <Divider />
+                    <label><font size="4"> Campus</font></label>
                     <SelectField value={this.state.value} onChange={this.handleChange} maxHeight={200}>
                         {this.state.campuses.map(campi => {
                             return <MenuItem name='campusId' value={campi.id} key={campi.id} primaryText={campi.name} />
